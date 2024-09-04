@@ -1,4 +1,5 @@
 import React, { useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom"
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { addBookmark, removeBookmark } from "../features/slices/bookmarkSlice";
@@ -10,6 +11,11 @@ const HomePage = ({ searchTerm }) => {
   const [nowPlayingData, setNowPlayingData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const navigate = useNavigate()
+  const handleClick = (id)=>{
+    navigate(`/movies/${id}`)
+  }
 
    // Access bookmark state from Redux
  const bookmarkMovies = useSelector((state)=> state.bookmarks)
@@ -142,6 +148,7 @@ const HomePage = ({ searchTerm }) => {
           <div
             key={movie.id}
             className="relative bg-gray-800 rounded-lg overflow-hidden shadow-lg h-[200px]"
+            onClick={()=>handleClick(movie.id)}
           >
             <img
               src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
