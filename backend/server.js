@@ -9,11 +9,7 @@ connection();
 const app = express();
 app.use(express.json());
 // Enable CORS for all routes
-app.use(
-  cors({
-    origin: "https://entertanment-app.onrender.com",
-  })
-);
+app.use();
 app.use("/api", router);
 
 // Running the server on localhost:4000
