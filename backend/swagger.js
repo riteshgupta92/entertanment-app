@@ -16,12 +16,13 @@ const swaggerDefinition = {
   ],
   components: {
     securitySchemes: {
-      bearerAuth: {
-        type: 'http',
-        scheme: 'bearer',
-        bearerFormat: 'JWT',
+        apiKeyAuth: {
+          type: 'apiKey',
+          in: 'header',
+          name: 'Authorization', // Name of the header field where the token will be passed
+          description: 'Enter your token without the "Bearer " prefix.',
+        },
       },
-    },
     schemas: {
       Bookmark: {
         type: 'object',
