@@ -9,7 +9,7 @@ const LoginPage = () => {
     email: "",
     password: "",
   });
-
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,6 +18,7 @@ const LoginPage = () => {
 
   const loginAccount = async (e) => {
     e.preventDefault();
+    setLoading(true); // Set loading to true when login starts
 
     try {
       const response = await fetch(
@@ -52,6 +53,8 @@ const LoginPage = () => {
       }
     } catch (error) {
       console.log("Error", error);
+    } finally {
+      setLoading(false); // Set loading to false after request completes
     }
   };
   return (
@@ -91,8 +94,16 @@ const LoginPage = () => {
           <button
             className="bg-[#fc4747] w-full max-w-[320px] py-3 rounded-md text-[#fff] hover:bg-white hover:text-black transition-colors duration-200"
             type="submit"
+            disabled={loading} // Disable button while loading
           >
-            Login to your account
+            {loading ? (
+              <div className="flex justify-center items-center">
+                <div className="loader"></div>{/*Spinner*/}
+                <span className="ml-2">Logging in...</span>
+              </div>
+            ) : (
+              "Login to your account"
+            )}
           </button>
         </div>
         <div className="flex items-center justify-center gap-1 mb-8 flex-wrap">

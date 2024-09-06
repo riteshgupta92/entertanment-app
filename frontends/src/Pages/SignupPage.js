@@ -10,14 +10,15 @@ const SignupPage = () => {
     password: "",
     repeatPassword: "",
   });
-
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const handleChange = (e) => {
-    const {name, value} = e.target
+    const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
   const registerAccount = async (e) => {
     e.preventDefault();
+    setLoading(true); // Set loading to true when signup starts
     // if password is matching from repeat password or not
     if (formData.password !== formData.repeatPassword) {
       toast.error("Passwords do not match!");
@@ -35,7 +36,7 @@ const SignupPage = () => {
         }
       );
       const data = await response.json();
-    
+
       if (response.ok) {
         console.log(data);
         localStorage.setItem("accessToken", data.access_token);
@@ -58,6 +59,8 @@ const SignupPage = () => {
       }
     } catch (error) {
       console.log("Error", error);
+    } finally {
+      setLoading(false); // Set loading to false after request completes
     }
   };
   return (
@@ -107,8 +110,17 @@ const SignupPage = () => {
           <button
             className="bg-[#fc4747] w-full max-w-[320px] py-3 rounded-md text-[#fff] hover:bg-white hover:text-black transition-colors duration-200"
             type="submit"
+            disabled={loading} // Disable button while loading
           >
-            Create an account
+            {loading ? (
+              <div className="flex justify-center items-center">
+                <div className="loader"></div>
+                {/*Spinner*/}
+                <span className="ml-2">Signing up...</span>
+              </div>
+            ) : (
+              "Create an account"
+            )}
           </button>
         </div>
         <div className="flex items-center justify-center gap-1 mb-8 flex-wrap">
