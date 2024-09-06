@@ -24,6 +24,37 @@ The Entertainment App is a full-stack application that allows users to explore m
 
 You can view the live version of the app here: [Entertainment-App](https://entertainment-fac29.web.app/)
 
+## Database Schema
+
++------------------------+
+|   Users Collection     |
+|------------------------|
+| _id: ObjectId          |
+| email: String          |
+| password: String       |
+| bookmarks: [ ]         |
+|                        |
+|   +-----------------+  |
+|   | Bookmarks       |  |
+|   |-----------------|  |
+|   | adult: Boolean  |  |
+|   | backdrop_path   |  |
+|   | genre_ids       |  |
+|   | id: Number      |  |
+|   | original_lang   |  |
+|   | original_title  |  |
+|   | overview        |  |
+|   | popularity      |  |
+|   | poster_path     |  |
+|   | release_date    |  |
+|   | title: String   |  |
+|   | video: Boolean  |  |
+|   | vote_average    |  |
+|   | vote_count      |  |
+|   +-----------------+  |
++------------------------+
+
+
 ## Installation
 
 1. Clone the repository:
