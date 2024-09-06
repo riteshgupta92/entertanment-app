@@ -20,6 +20,8 @@ The Entertainment App is a full-stack application that allows users to explore m
 
 ## Live Demo
 
+> **Note**: Please connect to the VPN while using the application as TMDB services are blocked in India.
+
 You can view the live version of the app here: [Entertainment-App](https://entertainment-fac29.web.app/)
 
 ## Installation
