@@ -2,8 +2,13 @@ const jwt = require("jsonwebtoken");
 
 const accessToken = (handler) => {
   return (req, res, next) => {
-    const token = req.headers["authorization"];
-
+    console.log("re", req.headers);
+    if (req.headers["authorization"].includes("Bearer")) {
+      token = req.headers["authorization"].split(" ")[1];
+    } else {
+      token = req.headers["authorization"];
+    }
+    console.log("toke", token)
     if (!token) {
       return res.status(404).json({ message: "Token Not Found" });
     }
