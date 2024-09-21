@@ -1,6 +1,26 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
+
+// transport.createTransport({
+//   service: "gmail",
+//   auth: {
+//     user: process.env.EMAIL_USER,
+//     pass: process.env.EMAIL_PASS,
+//   },
+// });
+
+const transport = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false, // upgrade later with STARTTLS
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
+
 const signup = async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -33,6 +53,24 @@ const signup = async (req, res) => {
         expiresIn: "1d", // token will expires in 1 day
       }
     );
+
+    // welcome email send to the user email
+
+    const mailOptions = {
+      from : process.env.EMAIL_USER,
+      to : user.email,
+      subject : "Welcome to Our App 😎",
+      text :  `Hi ${user.email},\n\nWelcome to our app! We're excited to have you on board.`
+    }
+
+    // send the mail
+    transport.sendMail(mailOptions, (err,info)=>{
+      if(err){
+        console.log("Error sending mail", err)
+      }else{
+        console.log("Email sent", info.response)
+      }
+    })
     return res.status(201).json({
       message: "User Created Successfully",
       user: { id: user._id, email: user.email },

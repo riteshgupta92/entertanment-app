@@ -11,7 +11,7 @@ const swaggerDefinition = {
   },
   servers: [
     {
-        url: 'https://entertanment-app.onrender.com/api',
+        url: process.env.SERVER_URL,
     },
   ],
   components: {
