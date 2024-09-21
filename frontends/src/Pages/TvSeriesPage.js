@@ -131,7 +131,7 @@ const TvSeriesPage = ({ searchTerm }) => {
         TV series
       </h1>
 
-      <div className="grid gap-6 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-2">
+      <div className="grid gap-10 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
         {filteredData.map((tv) => (
           <div
             key={tv.id}
@@ -141,7 +141,7 @@ const TvSeriesPage = ({ searchTerm }) => {
             <img
               src={`https://image.tmdb.org/t/p/w500/${tv.poster_path}`}
               alt={tv.name}
-              className="w-full h-auto rounded-t-lg cursor-pointer transform transition-transform duration-300 hover:scale-105"
+              className="w-full h-full rounded-t-lg cursor-pointer transform transition-transform duration-300 hover:scale-105"
             />
             <div className="absolute top-2 right-2">
               {isBookmarked(tv.id) ? (
@@ -162,14 +162,14 @@ const TvSeriesPage = ({ searchTerm }) => {
                 />
               )}
             </div>
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-transparent to-transparent p-2">
+            {/* <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-transparent to-transparent p-2">
               <h1 className="text-white text-lg font-semibold truncate">
                 {tv.name}
               </h1>
               <p className="text-gray-400 text-sm mt-1">
                 {tv.vote_average} • {tv.adult ? "18+" : "PG"}
               </p>
-            </div>
+            </div> */}
           </div>
         ))}
       </div>
