@@ -4,7 +4,6 @@
     left: 0;
     width: 100%;
     z-index: 1000; /* Ensure it stays above other content */
-    background-color: #161d2f; /* Adjust background color as needed */
   }
   /* Spinner Styles */
 .loader {

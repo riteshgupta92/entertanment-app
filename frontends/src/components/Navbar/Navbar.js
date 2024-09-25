@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import {FaMoon, FaSun} from "react-icons/fa"
 import { BiSolidMovie } from "react-icons/bi";
 import { CiSearch } from "react-icons/ci";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
@@ -16,6 +17,29 @@ import "react-toastify/dist/ReactToastify.css";
 const Navbar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState();
+
+
+  // Toggle dark mode
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+    if (isDarkMode) {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    } else {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    }
+  };
+
+  // Load theme from local storage on initial load
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      setIsDarkMode(true);
+      document.documentElement.classList.add("dark");
+    }
+  }, []);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -77,7 +101,7 @@ const Navbar = ({ onSearch }) => {
 
   return (
     <>
-      <nav className="flex justify-between items-center p-4 navbar">
+      <nav className="dark:bg-[#161d2f] bg-slate-200 flex justify-between items-center p-4 navbar">
         {/* right */}
         <div className="cursor-pointer">
           <BiSolidMovie
@@ -110,9 +134,16 @@ const Navbar = ({ onSearch }) => {
             </NavLink>
           </li>
         </ul>
+        <div className="flex items-center cursor-pointer">
+          {/* Dark Mode Toggle Button */}
+          <button onClick={toggleTheme} className="mr-4">
+            {isDarkMode ? (
+              <FaSun size={40} style={{ color: "#f5c518" }} />
+            ) : (
+              <FaMoon size={40} style={{ color: "#5a698f" }} />
+            )}
+          </button>
 
-        {/* left */}
-        <div className="cursor-pointer">
           {isLoggedIn ? (
             <IoLogOutOutline
               size={50}
@@ -130,11 +161,11 @@ const Navbar = ({ onSearch }) => {
       </nav>
       {!hideSearchBar && (
         <div className="flex my-3 px-3">
-          <CiSearch className="text-[#fff] mr-2 sm:mr-4" size={30} />
+          <CiSearch className="dark:text-[#fff] mr-2 sm:mr-4" size={30} />
           <input
             type="text"
             placeholder="Search for movies or TV series"
-            className="w-full bg-transparent pb-2 sm:pb-4 outline-0 border-0 text-[#fff] text-lg sm:text-2xl placeholder:text-gray-700 focus:border-b-2 border-[#5a698f]"
+            className="w-full bg-transparent pb-2 sm:pb-4 outline-0 border-0 dark:text-[#fff] text-lg sm:text-2xl dark:placeholder:text-gray-700 focus:border-b-2 dark:border-[#5a698f]"
             value={searchTerm}
             onChange={handleSearchChange}
           />

@@ -121,12 +121,12 @@ const HomePage = ({ searchTerm }) => {
     return bookmarkMovies.some((movie) => movie.id === id);
   };
   return (
-    <div className="flex justify-center items-center mb-3 bg-[#10141e] flex-col min-h-screen p-6">
+    <div className="flex justify-center items-center mb-3 dark:bg-[#10141e] flex-col min-h-screen p-6">
       {/*Sliding Movies*/}
-      <h1 className="text-3xl text-gray-300 font-thin mb-8 mr-auto ">
+      <h1 className="text-3xl dark:text-gray-300 font-thin mb-8 mr-auto ">
         Trending
       </h1>
-      <div className="flex justify-center items-center gap-4 sm:gap-6 md:gap-8 mb-8 overflow-y-hidden overflow-x-scroll poster">
+      <div className="flex justify-center items-center gap-4 sm:gap-6 md:gap-8 mb-8 overflow-y-hidden overflow-x-scroll poster" >
         {nowPlayingData.map((movie, index) => (
           <img
             key={movie.id}
@@ -134,32 +134,32 @@ const HomePage = ({ searchTerm }) => {
             alt={movie.title}
             className={`w-32 sm:w-40 md:w-48 lg:w-56 xl:w-64 object-contain max-h-[150px] sm:max-h-[180px] md:max-h-[200px] cursor-pointer rounded-md shadow-lg transform transition-transform duration-300 hover:scale-105 ${
               currentIndex === index ? " opacity-100 scale-110" : "opacity-50"
-            }`}
-          />
+            }`} 
+            onClick={()=>handleClick(movie.id)}/>
         ))}
       </div>
 
       {/*Recommended*/}
-      <h1 className="text-3xl text-gray-300 font-thin mb-8 mr-auto ">
+      <h1 className="text-3xl dark:text-gray-300 font-thin mb-8 mr-auto ">
         Recommended for you
       </h1>
       <div className="grid gap-10 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
         {filterData.map((movie) => (
           <div
             key={movie.id}
-            className="relative bg-gray-800 rounded-lg overflow-hidden shadow-lg h-[200px]"
+            className="relative h-auto bg-gray-800 rounded-lg overflow-hidden shadow-lg"
             onClick={()=>handleClick(movie.id)}
           >
             <img
               src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
               alt={movie.title}
-              className="w-full max-w-60 h-full rounded-t-lg cursor-pointer transform transition-transform duration-300 hover:scale-105"
+              className="w-full h-full rounded-t-lg cursor-pointer transform transition-transform duration-300 hover:scale-105"
             />
             {/* Bookmark Icon */}
             <div className="absolute top-2 right-2">
               {isBookmarked(movie.id) ? (
                 <FaBookmark
-                  className="text-white cursor-pointer"
+                  className="dark:text-white cursor-pointer"
                   onClick={(e) => {
                     e.stopPropagation();
                     handleRemoveBookmark(movie.id);
@@ -167,7 +167,7 @@ const HomePage = ({ searchTerm }) => {
                 />
               ) : (
                 <FaRegBookmark
-                  className="text-white cursor-pointer"
+                  className="dark:text-white cursor-pointer"
                   onClick={(e) => {
                     e.stopPropagation();
                     handleAddBookmark(movie);
@@ -175,7 +175,7 @@ const HomePage = ({ searchTerm }) => {
                 />
               )}
             </div>
-            {/* <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-transparent to-transparent p-2">
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-transparent to-transparent p-2">
               <h1 className="text-white text-lg font-semibold truncate">
                 {movie.title}
               </h1>
@@ -183,7 +183,7 @@ const HomePage = ({ searchTerm }) => {
                 {new Date(movie.release_date).getFullYear()} •{" "}
                 {movie.vote_average} • {movie.adult ? "18+" : "PG"}
               </p>
-            </div> */}
+            </div>
           </div>
         ))}
       </div>

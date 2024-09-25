@@ -64,16 +64,16 @@ const SignupPage = () => {
     }
   };
   return (
-    <div className="bg-[#10141e] flex flex-col justify-center items-center w-full h-screen px-4 sm:px-6 lg:px-8">
+    <div className="dark:bg-[#10141e] flex flex-col justify-center items-center w-full h-screen px-4 sm:px-6 lg:px-8">
       <BiSolidMovie
         size={50}
         style={{ color: "#fc4747", marginBottom: "10px" }}
       />
       <form
-        className="bg-[#161d2f] w-full max-w-[400px] flex flex-col rounded-lg"
+        className="dark:bg-[#161d2f] bg-slate-100 w-full max-w-[400px] flex flex-col rounded-lg"
         onSubmit={registerAccount}
       >
-        <h2 className="text-[#fff] text-3xl mt-8 mb-8 text-start mx-10 sm:mx-10">
+        <h2 className="dark:text-[#fff] text-3xl mt-8 mb-8 text-start mx-10 sm:mx-10">
           Sign Up
         </h2>
         <div className="w-full mb-8 flex justify-center items-center">
@@ -81,7 +81,7 @@ const SignupPage = () => {
             type="email"
             name="email"
             placeholder="Email address"
-            className="w-full max-w-[320px] py-3 outline-0 border-0 bg-transparent border-b-2 text-[#fff] px-2 sm:px-4"
+            className="w-full max-w-[320px] py-3 outline-0 border-0 bg-transparent border-b-2 dark:text-[#fff] px-2 sm:px-4"
             value={formData.email}
             onChange={handleChange}
           />
@@ -91,7 +91,7 @@ const SignupPage = () => {
             type="password"
             name="password"
             placeholder="Password"
-            className="w-full max-w-[320px] py-3 outline-0 border-0 bg-transparent border-b-2 text-[#fff] px-2 sm:px-4"
+            className="w-full max-w-[320px] py-3 outline-0 border-0 bg-transparent border-b-2 dark:text-[#fff] px-2 sm:px-4"
             value={formData.password}
             onChange={handleChange}
           />
@@ -101,14 +101,14 @@ const SignupPage = () => {
             type="password"
             name="repeatPassword"
             placeholder="Repeat Password"
-            className="w-full max-w-[320px] py-3 outline-0 border-0 bg-transparent border-b-2 text-[#fff] px-2 sm:px-4"
+            className="w-full max-w-[320px] py-3 outline-0 border-0 bg-transparent border-b-2 dark:text-[#fff] px-2 sm:px-4"
             value={formData.repeatPassword}
             onChange={handleChange}
           />
         </div>
         <div className="flex justify-center items-center mb-8">
           <button
-            className="bg-[#fc4747] w-full max-w-[320px] py-3 rounded-md text-[#fff] hover:bg-white hover:text-black transition-colors duration-200"
+            className="dark:bg-[#fc4747] bg-blue-400 w-full max-w-[320px] py-3 rounded-md dark:text-[#fff] transition-colors duration-200"
             type="submit"
             disabled={loading} // Disable button while loading
           >
@@ -124,9 +124,9 @@ const SignupPage = () => {
           </button>
         </div>
         <div className="flex items-center justify-center gap-1 mb-8 flex-wrap">
-          <p className="text-[#fff]">Already have an account?</p>
+          <p className="dark:text-[#fff]">Already have an account?</p>
           <span
-            className="text-[#fc4747] cursor-pointer hover:underline"
+            className="dark:text-[#fc4747] text-blue-400 cursor-pointer hover:underline"
             onClick={() => navigate("/login")}
           >
             Login

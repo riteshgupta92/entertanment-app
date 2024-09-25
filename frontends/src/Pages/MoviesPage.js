@@ -123,27 +123,27 @@ const MoviesPage = ({ searchTerm }) => {
   if (status === "failed") return <p>{error}</p>;
 
   return (
-    <div className="flex justify-center items-center mb-3 bg-[#10141e] flex-col min-h-screen p-6">
-      <h1 className="text-3xl text-gray-300 font-thin mb-8 mr-auto ">Movies</h1>
+    <div className="flex justify-center items-center mb-3 dark:bg-[#10141e] flex-col min-h-screen p-6">
+      <h1 className="text-3xl dark:text-gray-300 font-thin mb-8 mr-auto ">Movies</h1>
 
       <div className="grid gap-10 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
         {filteredData.map((movie) => (
           <div
             key={movie.id}
-            className="relative bg-gray-800 rounded-lg overflow-hidden shadow-lg h-[200px]"
+            className="relative h-auto bg-gray-800 rounded-lg overflow-hidden shadow-lg"
             onClick={() => handleClick(movie.id)}
           >
             <img
               src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
               alt={movie.title}
-              className="w-full h-full rounded-t-lg cursor-pointer object-contain object-center transform transition-transform duration-300 hover:scale-105"
+              className="w-full h-full rounded-t-lg cursor-pointer transform transition-transform duration-300 hover:scale-105"
             />
 
             {/* Bookmark Icon */}
             <div className="absolute top-2 right-2">
               {isBookmarked(movie.id) ? (
                 <FaBookmark
-                  className="text-white cursor-pointer"
+                  className="dark:text-white cursor-pointer"
                   onClick={(e) => {
                     e.stopPropagation();
                     handleRemoveBookmark(movie.id);
@@ -151,7 +151,7 @@ const MoviesPage = ({ searchTerm }) => {
                 />
               ) : (
                 <FaRegBookmark
-                  className="text-white cursor-pointer"
+                  className="dark:text-white cursor-pointer"
                   onClick={(e) => {
                     e.stopPropagation();
                     handleAddBookmark(movie);
@@ -159,7 +159,7 @@ const MoviesPage = ({ searchTerm }) => {
                 />
               )}
             </div>
-            {/* <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-transparent to-transparent p-2">
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-transparent to-transparent p-2">
               <h1 className="text-white text-lg font-semibold truncate">
                 {movie.title}
               </h1>
@@ -167,7 +167,7 @@ const MoviesPage = ({ searchTerm }) => {
                 {new Date(movie.release_date).getFullYear()} •{" "}
                 {movie.vote_average} • {movie.adult ? "18+" : "PG"}
               </p>
-            </div> */}
+            </div>
           </div>
         ))}
       </div>

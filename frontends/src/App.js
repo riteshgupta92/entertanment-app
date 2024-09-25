@@ -22,7 +22,7 @@ const location = useLocation()
 const hideNavbar = location.pathname === "/404" || location.pathname === "*"
 
   return (
-    <div className="bg-[#10141e] h-screen w-full py-20">
+    <div className="dark:bg-[#10141e] h-screen w-full py-20">
       {!hideNavbar && <Navbar onSearch={handleSearch} />}
       <Routes>
         <Route path="/" element={<HomePage searchTerm={searchTerm} />} />

@@ -126,8 +126,8 @@ const TvSeriesPage = ({ searchTerm }) => {
     return <p className="text-xl text-white px-4">Loading...</p>;
   if (status === "failed") return <p>{error}</p>;
   return (
-    <div className="flex justify-center items-center mb-3 bg-[#10141e] flex-col min-h-screen p-6">
-      <h1 className="text-3xl text-gray-300 font-thin mb-8 mr-auto">
+    <div className="flex justify-center items-center mb-3 dark:bg-[#10141e] flex-col min-h-screen p-6">
+      <h1 className="text-3xl dark:text-gray-300 font-thin mb-8 mr-auto">
         TV series
       </h1>
 
@@ -135,7 +135,7 @@ const TvSeriesPage = ({ searchTerm }) => {
         {filteredData.map((tv) => (
           <div
             key={tv.id}
-            className="relative bg-gray-800 rounded-lg overflow-hidden shadow-lg h-[200px]"
+            className="relative h-auto dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg"
             onClick={() => handleClick(tv.id)}
           >
             <img
@@ -146,7 +146,7 @@ const TvSeriesPage = ({ searchTerm }) => {
             <div className="absolute top-2 right-2">
               {isBookmarked(tv.id) ? (
                 <FaBookmark
-                  className="text-white cursor-pointer"
+                  className="dark:text-white cursor-pointer"
                   onClick={(e) => {
                     e.stopPropagation();
                     handleRemoveBookmark(tv.id);
@@ -154,7 +154,7 @@ const TvSeriesPage = ({ searchTerm }) => {
                 />
               ) : (
                 <FaRegBookmark
-                  className="text-white cursor-pointer"
+                  className="dark:text-white cursor-pointer"
                   onClick={(e) => {
                     e.stopPropagation();
                     handleAddBookmark(tv);
@@ -162,14 +162,14 @@ const TvSeriesPage = ({ searchTerm }) => {
                 />
               )}
             </div>
-            {/* <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-transparent to-transparent p-2">
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-transparent to-transparent p-2">
               <h1 className="text-white text-lg font-semibold truncate">
                 {tv.name}
               </h1>
               <p className="text-gray-400 text-sm mt-1">
                 {tv.vote_average} • {tv.adult ? "18+" : "PG"}
               </p>
-            </div> */}
+            </div>
           </div>
         ))}
       </div>
@@ -177,7 +177,7 @@ const TvSeriesPage = ({ searchTerm }) => {
       <div className="flex justify-center items-center mt-6 space-x-2">
         {currentPage > 1 && (
           <button
-            className="bg-gray-700 text-white px-3 py-1 rounded"
+            className="bg-gray-700 :text-white px-3 py-1 rounded"
             onClick={() => handlePageChange(currentPage - 1)}
           >
             Previous
