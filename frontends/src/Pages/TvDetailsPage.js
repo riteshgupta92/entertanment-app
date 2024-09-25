@@ -47,15 +47,15 @@ const TvDetailsPage = () => {
 
   if (!tvSeriesDetails) {
     return (
-      <div className="bg-[#10141e] text-xl text-white px-4 min-h-screen">Loading...</div>
+      <div className="dark:bg-[#10141e] text-xl dark:text-white px-4 min-h-screen">Loading...</div>
     );
   }
 
   const { episode_run_time, status, genres, adult, homepage } = tvSeriesDetails;
 
   return (
-    <div className="bg-[#10141e] text-white p-6 min-h-screen flex flex-col items-center">
-      <div className="w-full max-w-[1000px] h-auto gap-8 bg-transparent grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 p-5 rounded-md shadow-sm shadow-blue-100">
+    <div className="dark:bg-[#10141e] dark:text-white p-6 min-h-screen flex flex-col items-center">
+      <div className="w-full max-w-[1000px] h-auto gap-8 bg-transparent grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 p-5 rounded-md shadow-sm dark:shadow-blue-100 shadow-black">
         <div className="flex justify-center items-center overflow-hidden rounded-md mb-4 md:mb-0">
           <img
             src={`https://image.tmdb.org/t/p/w500/${tvSeriesDetails.poster_path}`}
@@ -65,26 +65,26 @@ const TvDetailsPage = () => {
         </div>
         <div className="p-2">
           <h1 className="text-4xl font-bold mb-4">{tvSeriesDetails.name}</h1>
-          <h5 className="mb-5 text-[#a9aebb] ">Synopsis:</h5>
+          <h5 className="mb-5 dark:text-[#a9aebb] ">Synopsis:</h5>
           <p className="text-lg mb-4">{tvSeriesDetails.overview}</p>
           <p className="text-md mb-4">
-            <strong  className="text-[#a9aebb]">First Air Date:</strong> {new Date(tvSeriesDetails.first_air_date).toLocaleDateString()}
+            <strong  className="dark:text-[#a9aebb]">First Air Date:</strong> {new Date(tvSeriesDetails.first_air_date).toLocaleDateString()}
           </p>
           <p className="text-md mb-4">
-            <strong className="text-[#a9aebb]">Rating:</strong> {tvSeriesDetails.vote_average}
+            <strong className="dark:text-[#a9aebb]">Rating:</strong> {tvSeriesDetails.vote_average}
             <span className="mx-2">⭐️⭐️⭐️⭐️☆</span><span> ({tvSeriesDetails.vote_count} votes)</span>
           </p>
           <p className="text-md mb-4">
-            <strong className="text-[#a9aebb]">Episode Length:</strong> {episode_run_time?.[0] || "N/A"} minutes
+            <strong className="dark:text-[#a9aebb]">Episode Length:</strong> {episode_run_time?.[0] || "N/A"} minutes
           </p>
           <p className="text-md mb-4">
-            <strong className="text-[#a9aebb]">Status:</strong> {status}
+            <strong className="dark:text-[#a9aebb]">Status:</strong> {status}
           </p>
           <p className="text-md mb-4">
-            <strong className="text-[#a9aebb]">Genre:</strong> {genres.map((genre) => genre.name).join(", ")}
+            <strong className="dark:text-[#a9aebb]">Genre:</strong> {genres.map((genre) => genre.name).join(", ")}
           </p>
           <p className="text-md mb-4">
-            <strong className="text-[#a9aebb]">Adult Content:</strong> {adult ? "Yes" : "No"}
+            <strong className="dark:text-[#a9aebb]">Adult Content:</strong> {adult ? "Yes" : "No"}
           </p>
 
           <div className="flex gap-4 mt-4">

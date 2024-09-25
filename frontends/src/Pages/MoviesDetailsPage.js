@@ -43,7 +43,7 @@ const MoviesDetailsPage = () => {
 
   if (!movieDetails) {
     return (
-      <div className="bg-[#10141e] text-xl text-white px-4 min-h-screen">Loading...</div>
+      <div className="dark:bg-[#10141e] text-xl dark:text-white px-4 min-h-screen">Loading...</div>
     );
   }
  
