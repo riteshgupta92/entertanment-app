@@ -8,7 +8,9 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const MoviesPage = ({ searchTerm }) => {
-  const { movies, status, error, totalPages } = useSelector((state) => state.movies); // removed 'page'
+  const { movies, status, error, page, totalPages } = useSelector(
+    (state) => state.movies
+  ); // removed 'page'
   const bookmarkMovies = useSelector((state) => state.bookmarks);
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 10;
@@ -16,10 +18,10 @@ const MoviesPage = ({ searchTerm }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (status === "idle") {
+    if (status === "idle" || page !== currentPage) {
       dispatch(fetchMovies({ page: currentPage, limit: ITEMS_PER_PAGE }));
     }
-  }, [dispatch, status, currentPage]);
+  }, [dispatch, status, currentPage, page]);
 
   const filteredData = searchTerm
     ? movies.filter((movie) =>
@@ -38,14 +40,17 @@ const MoviesPage = ({ searchTerm }) => {
       return;
     }
     try {
-      const response = await fetch("https://entertanment-app.onrender.com/api/bookmark", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-        body: JSON.stringify(movie),
-      });
+      const response = await fetch(
+        "https://entertanment-app.onrender.com/api/bookmark",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+          body: JSON.stringify(movie),
+        }
+      );
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
@@ -63,14 +68,17 @@ const MoviesPage = ({ searchTerm }) => {
       return;
     }
     try {
-      const response = await fetch("https://entertanment-app.onrender.com/api/bookmark", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-        body: JSON.stringify({ bookmark_id }),
-      });
+      const response = await fetch(
+        "https://entertanment-app.onrender.com/api/bookmark",
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+          body: JSON.stringify({ bookmark_id }),
+        }
+      );
       if (!response.ok) {
         throw new Error("Failed to remove bookmark");
       }
@@ -91,40 +99,106 @@ const MoviesPage = ({ searchTerm }) => {
 
   const renderPageNumbers = () => {
     const pageNumbers = [];
-    for (let i = 1; i <= totalPages; i++) {
-      if (
-        i === 1 || 
-        i === totalPages || 
-        (i >= currentPage - 1 && i <= currentPage + 1)
-      ) {
+    const isSmallScreen = window.innerWidth < 640; // Check for small screen
+
+    if (isSmallScreen) {
+      // Show the first page, the current page, and the last page on small screens
+      if (totalPages > 1) {
         pageNumbers.push(
           <button
-            key={i}
-            onClick={() => handlePageChange(i)}
-            className={`px-3 py-1 rounded ${
-              i === currentPage ? "bg-blue-500 text-white" : "bg-gray-700 text-white"
+            key={1}
+            onClick={() => handlePageChange(1)}
+            className={`px-2 py-1 text-sm rounded ${
+              currentPage === 1
+                ? "bg-blue-500 text-white"
+                : "bg-gray-700 text-white"
             }`}
           >
-            {i}
+            1
           </button>
         );
-      } else if (i === currentPage - 2 || i === currentPage + 2) {
+      }
+
+      // Only show current page if it's not the first or last page
+      if (currentPage > 1 && currentPage < totalPages) {
         pageNumbers.push(
-          <span key={`ellipsis-${i}`} className="text-white px-2">
-            ...
-          </span>
+          <button
+            key={currentPage}
+            onClick={() => handlePageChange(currentPage)}
+            className={`px-2 py-1 text-sm rounded bg-blue-500 text-white`}
+          >
+            {currentPage}
+          </button>
         );
       }
+
+      if (totalPages > 1) {
+        pageNumbers.push(
+          <button
+            key={totalPages}
+            onClick={() => handlePageChange(totalPages)}
+            className={`px-2 py-1 text-sm rounded ${
+              currentPage === totalPages
+                ? "bg-blue-500 text-white"
+                : "bg-gray-700 text-white"
+            }`}
+          >
+            {totalPages}
+          </button>
+        );
+      }
+    } else {
+      // For larger screens, show more pagination buttons
+      for (let i = 1; i <= totalPages; i++) {
+        if (
+          i === 1 ||
+          i === totalPages ||
+          (i >= currentPage - 1 && i <= currentPage + 1)
+        ) {
+          pageNumbers.push(
+            <button
+              key={i}
+              onClick={() => handlePageChange(i)}
+              className={`px-3 py-1 rounded ${
+                i === currentPage
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-700 text-white"
+              }`}
+            >
+              {i}
+            </button>
+          );
+        } else if (i === currentPage - 2 || i === currentPage + 2) {
+          pageNumbers.push(
+            <span key={`ellipsis-${i}`} className="text-white px-2">
+              ...
+            </span>
+          );
+        }
+      }
     }
+
     return pageNumbers;
   };
 
-  if (status === "loading") return <p className="text-xl text-white px-4">Loading...</p>;
+  useEffect(() => {
+    const handleResize = () => {
+      setCurrentPage(1); // Reset to page 1 on resize if needed
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  if (status === "loading")
+    return <p className="text-xl text-white px-4">Loading...</p>;
   if (status === "failed") return <p>{error}</p>;
 
   return (
     <div className="flex justify-center items-center mb-3 dark:bg-[#10141e] flex-col min-h-screen p-6">
-      <h1 className="text-3xl dark:text-gray-300 font-thin mb-8 mr-auto ">Movies</h1>
+      <h1 className="text-3xl dark:text-gray-300 font-thin mb-8 mr-auto ">
+        Movies
+      </h1>
 
       <div className="grid gap-10 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
         {filteredData.map((movie) => (
@@ -176,7 +250,7 @@ const MoviesPage = ({ searchTerm }) => {
       <div className="flex justify-center items-center mt-6 space-x-2">
         {currentPage > 1 && (
           <button
-            className="bg-gray-700 text-white px-3 py-1 rounded"
+            className="bg-gray-700 text-white px-2 py-1 text-sm rounded"
             onClick={() => handlePageChange(currentPage - 1)}
           >
             Previous
@@ -185,13 +259,14 @@ const MoviesPage = ({ searchTerm }) => {
         {renderPageNumbers()}
         {currentPage < totalPages && (
           <button
-            className="bg-gray-700 text-white px-3 py-1 rounded"
+            className="bg-gray-700 text-white px-2 py-1 text-sm rounded"
             onClick={() => handlePageChange(currentPage + 1)}
           >
             Next
           </button>
         )}
       </div>
+
       <ToastContainer />
     </div>
   );
