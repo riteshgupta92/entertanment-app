@@ -94,8 +94,8 @@ const TvSeriesPage = ({ searchTerm }) => {
     const pageNumbers = [];
     for (let i = 1; i <= totalPages; i++) {
       if (
-        i === 1 ||
-        i === totalPages ||
+        i === 1 || 
+        i === totalPages || 
         (i >= currentPage - 1 && i <= currentPage + 1)
       ) {
         pageNumbers.push(
@@ -103,9 +103,7 @@ const TvSeriesPage = ({ searchTerm }) => {
             key={i}
             onClick={() => handlePageChange(i)}
             className={`px-3 py-1 rounded ${
-              i === currentPage
-                ? "bg-blue-500 text-white"
-                : "bg-gray-700 text-white"
+              i === currentPage ? "bg-blue-500 text-white" : "bg-gray-700 text-white"
             }`}
           >
             {i}
@@ -177,7 +175,7 @@ const TvSeriesPage = ({ searchTerm }) => {
       <div className="flex justify-center items-center mt-6 space-x-2">
         {currentPage > 1 && (
           <button
-            className="bg-gray-700 :text-white px-3 py-1 rounded"
+            className="bg-gray-700 :text-white px-3 py-1 rounded disabled:opacity-50"
             onClick={() => handlePageChange(currentPage - 1)}
           >
             Previous
@@ -186,7 +184,7 @@ const TvSeriesPage = ({ searchTerm }) => {
         {renderPageNumbers()}
         {currentPage < totalPages && (
           <button
-            className="bg-gray-700 text-white px-3 py-1 rounded"
+            className="bg-gray-700 text-white px-3 py-1 rounded disabled:opacity-50"
             onClick={() => handlePageChange(currentPage + 1)}
           >
             Next

@@ -58,7 +58,7 @@ const LoginPage = () => {
     }
   };
   return (
-    <div className="dark:bg-[#10141e] flex flex-col justify-center items-center w-full h-screen px-4 sm:px-6 lg:px-8">
+    <div className="dark:bg-[#10141e] flex flex-col justify-center items-center w-full min-h-screen px-4 sm:px-6 lg:px-8">
       <BiSolidMovie
         size={50}
         style={{ color: "#fc4747", marginBottom: "10px" }}
@@ -70,7 +70,7 @@ const LoginPage = () => {
         <h2 className="dark:text-[#fff] text-3xl mt-8 mb-8 text-start mx-10 sm:mx-10">
           Login
         </h2>
-        <div className="w-full mb-8 flex justify-center items-center">
+        <div className="w-full mb-8 flex justify-center items-center px-2">
           <input
             type="email"
             name="email"
@@ -80,7 +80,7 @@ const LoginPage = () => {
             onChange={handleChange}
           />
         </div>
-        <div className="w-full mb-8 flex justify-center items-center">
+        <div className="w-full mb-8 flex justify-center items-center px-2">
           <input
             type="password"
             name="password"
@@ -90,7 +90,7 @@ const LoginPage = () => {
             onChange={handleChange}
           />
         </div>
-        <div className="flex justify-center items-center mb-8">
+        <div className="flex justify-center items-center mb-8 px-2">
           <button
             className="dark:bg-[#fc4747] bg-blue-400 w-full max-w-[320px] py-3 rounded-md dark:text-[#fff] transition-colors duration-200"
             type="submit"

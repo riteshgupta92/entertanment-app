@@ -8,7 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const MoviesPage = ({ searchTerm }) => {
-  const { movies, status, error, page, totalPages } = useSelector((state) => state.movies);
+  const { movies, status, error, totalPages } = useSelector((state) => state.movies); // removed 'page'
   const bookmarkMovies = useSelector((state) => state.bookmarks);
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 10;
@@ -16,10 +16,10 @@ const MoviesPage = ({ searchTerm }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (status === "idle" || page !== currentPage) {
+    if (status === "idle") {
       dispatch(fetchMovies({ page: currentPage, limit: ITEMS_PER_PAGE }));
     }
-  }, [dispatch, status, currentPage, page]);
+  }, [dispatch, status, currentPage]);
 
   const filteredData = searchTerm
     ? movies.filter((movie) =>
@@ -192,7 +192,7 @@ const MoviesPage = ({ searchTerm }) => {
           </button>
         )}
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 };
