@@ -6,11 +6,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { addBookmark, removeBookmark } from "../features/slices/bookmarkSlice";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Spinner from "../components/Navbar/Spinner";
 
 const HomePage = ({ searchTerm }) => {
   const [moviesData, setMoviesData] = useState([]);
   const [nowPlayingData, setNowPlayingData] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -24,6 +27,7 @@ const HomePage = ({ searchTerm }) => {
   const debouncedSearch = useCallback(
     debounce(async (term) => {
       try {
+        setLoading(true)
         let url;
         if (term) {
           url = `https://api.themoviedb.org/3/search/movie?api_key=5feda587f1f255bcb4972ddf3e20720a&query=${term}`;
@@ -33,8 +37,10 @@ const HomePage = ({ searchTerm }) => {
         const response = await fetch(url);
         const data = await response.json();
         setMoviesData(data.results);
+        setLoading(false)
       } catch (err) {
-        console.log(err);
+        setError(err.message);
+        setLoading(false)
       }
     }, 500), // 500ms delay
     [searchTerm]
@@ -47,12 +53,15 @@ const HomePage = ({ searchTerm }) => {
   useEffect(() => {
     const getTrendingData = async () => {
       try {
+        setLoading(true)
         const url = `https://api.themoviedb.org/3/movie/now_playing?api_key=5feda587f1f255bcb4972ddf3e20720a`;
         const response = await fetch(url);
         const data = await response.json();
         setNowPlayingData(data.results);
+        setLoading(false)
       } catch (err) {
-        console.log(err);
+        setError(err.message)
+        setLoading(false)
       }
     };
     getTrendingData();
@@ -125,7 +134,8 @@ const HomePage = ({ searchTerm }) => {
         Trending
       </h1>
       <div className="flex justify-center items-center gap-4 sm:gap-6 md:gap-8 mb-8 overflow-y-hidden overflow-x-scroll poster">
-        {nowPlayingData.map((movie, index) => (
+      {error && <p className="text-red-500">{error}</p>}
+        {loading ?( <Spinner/>) :(nowPlayingData.map((movie, index) => (
           <img
             key={movie.id}
             src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
@@ -135,14 +145,14 @@ const HomePage = ({ searchTerm }) => {
             }`}
             onClick={() => handleClick(movie.id)}
           />
-        ))}
+        )))}
       </div>
 
       <h1 className="text-3xl dark:text-gray-300 font-thin mb-8 mr-auto ">
         Recommended for you
       </h1>
       <div className="grid gap-10 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
-        {moviesData.map((movie) => (
+        {loading ? (<Spinner/>) :(moviesData.map((movie) => (
           <div
             key={movie.id}
             className="relative h-auto bg-gray-800 rounded-lg overflow-hidden shadow-lg"
@@ -150,7 +160,7 @@ const HomePage = ({ searchTerm }) => {
           >
             <img
               src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-              alt={movie.title}
+              alt={`Poster of ${movie.title}`}
               className="w-full h-full rounded-t-lg cursor-pointer transform transition-transform duration-300 hover:scale-105"
             />
             <div className="absolute top-2 right-2">
@@ -182,7 +192,7 @@ const HomePage = ({ searchTerm }) => {
               </p>
             </div>
           </div>
-        ))}
+        )))}
       </div>
       <ToastContainer />
     </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import Spinner from "../components/Navbar/Spinner";
 
 const TvDetailsPage = () => {
   const { id } = useParams();
@@ -47,7 +48,7 @@ const TvDetailsPage = () => {
 
   if (!tvSeriesDetails) {
     return (
-      <div className="dark:bg-[#10141e] text-xl dark:text-white px-4 min-h-screen">Loading...</div>
+      <div className="dark:bg-[#10141e] text-xl dark:text-white px-4 min-h-screen"><Spinner/></div>
     );
   }
 

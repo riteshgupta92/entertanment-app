@@ -6,6 +6,7 @@ import { fetchMovies } from "../features/slices/movieSlice";
 import { addBookmark, removeBookmark } from "../features/slices/bookmarkSlice";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Spinner from "../components/Navbar/Spinner";
 
 const MoviesPage = ({ searchTerm }) => {
   const { movies, status, error, page, totalPages } = useSelector(
@@ -191,7 +192,7 @@ const MoviesPage = ({ searchTerm }) => {
   }, []);
 
   if (status === "loading")
-    return <p className="text-xl text-white px-4">Loading...</p>;
+    return <p className="text-xl text-white px-4"><Spinner/></p>;
   if (status === "failed") return <p>{error}</p>;
 
   return (
